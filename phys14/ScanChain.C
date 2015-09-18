@@ -59,6 +59,7 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
     vector<TH1F*> ht_btag1_pt_vec;
     vector<TH1F*> ht_count_vec;
     vector<TH1F*> ht_ngenlep_vec;
+    vector<TH1F*> ht_topness_vec;
 
     string name;
     for(int i=0; i<N_BKG_TYPES; i++){
@@ -67,21 +68,23 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
         name = string("ht_ngoodbtags_")+(char)('0'+i);
         ht_ngoodbtags_vec.push_back(new TH1F(name.c_str(), name.c_str(), 5, -0.5, 4.5));
         name = string("ht_met_")+(char)('0'+i);
-        ht_met_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        ht_met_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("ht_mt_")+(char)('0'+i);
-        ht_mt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        ht_mt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("ht_mt2w_")+(char)('0'+i);
-        ht_mt2w_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        ht_mt2w_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("ht_lep1_pt_")+(char)('0'+i);
-        ht_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 400));
+        ht_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
         name = string("ht_jet1_pt_")+(char)('0'+i);
-        ht_jet1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        ht_jet1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("ht_btag1_pt_")+(char)('0'+i);
-        ht_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 400));
+        ht_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
         name = string("ht_count_")+(char)('0'+i);
         ht_count_vec.push_back(new TH1F(name.c_str(), name.c_str(), 1, 0, 2));
         name = string("ht_ngenlep_")+(char)('0'+i);
         ht_ngenlep_vec.push_back(new TH1F(name.c_str(), name.c_str(), 3, -0.5, 2.5));
+        name = string("ht_topness_")+(char)('0'+i);
+        ht_topness_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 20));
     }
 
     vector<string> bkg_cat_vec;
@@ -98,6 +101,7 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
     vector<TH1F*> hc_jet1_pt_vec;
     vector<TH1F*> hc_btag1_pt_vec;
     vector<TH1F*> hc_count_vec;
+    vector<TH1F*> hc_topness_vec;
 
     for(int i=0; i<N_BKG_CAT; i++){
         name = string("hc_ngoodjets_")+(char)('0'+i);
@@ -105,25 +109,27 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
         name = string("hc_ngoodbtags_")+(char)('0'+i);
         hc_ngoodbtags_vec.push_back(new TH1F(name.c_str(), name.c_str(), 5, -0.5, 4.5));
         name = string("hc_met_")+(char)('0'+i);
-        hc_met_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        hc_met_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hc_mt_")+(char)('0'+i);
-        hc_mt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        hc_mt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hc_mt2w_")+(char)('0'+i);
-        hc_mt2w_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        hc_mt2w_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hc_lep1_pt_")+(char)('0'+i);
-        hc_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 400));
+        hc_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
         name = string("hc_jet1_pt_")+(char)('0'+i);
-        hc_jet1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        hc_jet1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hc_btag1_pt_")+(char)('0'+i);
-        hc_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 400));
+        hc_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
         name = string("hc_count_")+(char)('0'+i);
         hc_count_vec.push_back(new TH1F(name.c_str(), name.c_str(), 1, 0, 2));
+        name = string("hc_topness_")+(char)('0'+i);
+        hc_topness_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 20));
     }
 
     vector<string> sig_name_vec;
-    sig_name_vec.push_back("425/230/222.5");
-    sig_name_vec.push_back("650/330/325");
-    sig_name_vec.push_back("850/105/100");
+    sig_name_vec.push_back("425/230/222.5 x10");
+    sig_name_vec.push_back("650/330/325 x10");
+    sig_name_vec.push_back("850/105/100 x10");
 
     vector<TH1F*> hs_ngoodjets_vec;
     vector<TH1F*> hs_ngoodbtags_vec;
@@ -135,6 +141,7 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
     vector<TH1F*> hs_btag1_pt_vec;
     vector<TH1F*> hs_count_vec;
     vector<TH1F*> hs_decay_vec;
+    vector<TH1F*> hs_topness_vec;
 
     for(int i=0; i<N_SIGNALS; i++){
         name = string("hs_ngoodjets_")+(char)('0'+i);
@@ -142,21 +149,23 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
         name = string("hs_ngoodbtags_")+(char)('0'+i);
         hs_ngoodbtags_vec.push_back(new TH1F(name.c_str(), name.c_str(), 5, -0.5, 4.5));
         name = string("hs_met_")+(char)('0'+i);
-        hs_met_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        hs_met_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hs_mt_")+(char)('0'+i);
-        hs_mt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        hs_mt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hs_mt2w_")+(char)('0'+i);
-        hs_mt2w_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        hs_mt2w_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hs_lep1_pt_")+(char)('0'+i);
-        hs_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 400));
+        hs_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
         name = string("hs_jet1_pt_")+(char)('0'+i);
-        hs_jet1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 500));
+        hs_jet1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hs_btag1_pt_")+(char)('0'+i);
-        hs_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 60, 0, 400));
+        hs_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
         name = string("hs_count_")+(char)('0'+i);
         hs_count_vec.push_back(new TH1F(name.c_str(), name.c_str(), 1, 0, 2));
         name = string("hs_decay_")+(char)('0'+i);
         hs_decay_vec.push_back(new TH1F(name.c_str(), name.c_str(), 4, -0.5, 3.5));
+        name = string("hs_topness_")+(char)('0'+i);
+        hs_topness_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 20));
     }
 
 
@@ -186,7 +195,7 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
             // Progress
             CMS3::progress( nEventsTotal, nEventsChain );
 
-            double scale = scale1fb();
+            double scale = scale1fb() * 10;
             double isSignal = (fileType>=4);
             int bkgType = getBkgType();
 
@@ -196,6 +205,9 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
             //     scale = 0.0009576;
             // if(fileType==6)
             //     scale = 0.0001751;
+
+            if(isSignal)
+                scale *= 10;
 
             if(isSignal)
                 hs_decay_vec[fileType-N_BKG_TYPES]->Fill(getStopDecayMode(), scale);
@@ -286,16 +298,19 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
                 ht_btag1_pt_vec[fileType]->Fill(btag1pt, scale);
                 ht_count_vec[fileType]->Fill(1,scale);
                 ht_ngenlep_vec[fileType]->Fill(bkgType,scale);
+                ht_topness_vec[fileType]->Fill(topness(),scale);
                 
                 hc_lep1_pt_vec[bkgType]->Fill(lep1pt, scale);
                 hc_jet1_pt_vec[bkgType]->Fill(jet1pt, scale);
                 hc_btag1_pt_vec[bkgType]->Fill(btag1pt, scale);
                 hc_count_vec[bkgType]->Fill(1,scale);
+                hc_topness_vec[bkgType]->Fill(topness(),scale);
             }else{
                 hs_lep1_pt_vec[fileType-N_BKG_TYPES]->Fill(lep1pt, scale);
                 hs_jet1_pt_vec[fileType-N_BKG_TYPES]->Fill(jet1pt, scale);
                 hs_btag1_pt_vec[fileType-N_BKG_TYPES]->Fill(btag1pt, scale);
                 hs_count_vec[fileType-N_BKG_TYPES]->Fill(1,scale);
+                hs_topness_vec[fileType-N_BKG_TYPES]->Fill(topness(),scale);
             }
 
 
@@ -327,6 +342,7 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
         ht_btag1_pt_vec[i]->Write();
         ht_count_vec[i]->Write();
         ht_ngenlep_vec[i]->Write();
+        ht_topness_vec[i]->Write();
     }
     for(int i=0; i<N_BKG_CAT; i++){
         hc_ngoodjets_vec[i]->Write();
@@ -338,6 +354,7 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
         hc_jet1_pt_vec[i]->Write();
         hc_btag1_pt_vec[i]->Write();
         hc_count_vec[i]->Write();
+        hc_topness_vec[i]->Write();
     }
     for(int i=0; i<N_SIGNALS; i++){
         hs_ngoodjets_vec[i]->Write();
@@ -350,36 +367,56 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
         hs_btag1_pt_vec[i]->Write();
         hs_count_vec[i]->Write();
         hs_decay_vec[i]->Write();
+        hs_topness_vec[i]->Write();
     }
 
     out.Close();
 
     TH1F *null = new TH1F("","",1,0,1);
     vector<Color_t> colors;
-    colors.push_back(kAzure+7);                                                
-    colors.push_back(kRed-7);
-    colors.push_back(kSpring-5);
-    colors.push_back(kOrange-2);
-    colors.push_back(kBlack);
-    colors.push_back(kBlack);
-    colors.push_back(kBlack);
-    //colors.push_back(kViolet-3);
+    // colors.push_back(kAzure+7);                                                
+    // colors.push_back(kRed-7);
+    // colors.push_back(kSpring-5);
+    // colors.push_back(kOrange-2);
+    // //colors.push_back(kViolet-3);
+    // colors.push_back(kBlack);
+    // colors.push_back(kBlack);
+    // colors.push_back(kBlack);
 
-    string comopt = " --lumi 1.0 --blackSignals --legendTextSize 0.025 --outOfFrame";
+    colors.push_back(TColor::GetColor("#267821"));
+    colors.push_back(TColor::GetColor("#85a767"));
+    colors.push_back(TColor::GetColor("#175a87"));
+    colors.push_back(TColor::GetColor("#7c9aaa"));
+
+    colors.push_back(TColor::GetColor("#f5ab35"));
+    colors.push_back(TColor::GetColor("#F22613"));
+    colors.push_back(TColor::GetColor("#50ebec"));
+
+    string comopt = " --lumi 10.0 --legendTextSize 0.025 --outOfFrame";
     
     dataMCplotMaker(null, ht_met_vec, bkg_names_vec, "met", "", "--outputName plots/t_met.pdf --xAxisLabel met"+comopt, hs_met_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_mt_vec, bkg_names_vec, "M_{T}", "", "--outputName plots/t_mt.pdf --xAxisLabel M_T"+comopt, hs_mt_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_mt2w_vec, bkg_names_vec, "MT2W", "", "--outputName plots/t_mt2w.pdf --xAxisLabel MT2W"+comopt, hs_mt2w_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_lep1_pt_vec, bkg_names_vec, "lep1 p_{T}", "", "--outputName plots/t_lep1_pt.pdf --xAxisLabel p_{T}"+comopt, hs_lep1_pt_vec, sig_name_vec, colors);
-    dataMCplotMaker(null, ht_jet1_pt_vec, bkg_names_vec, "jet1 p_{T}", "", "--outputName plots/t_jet1_pt.pdf--xAxisLabel p_{T}"+comopt, hs_jet1_pt_vec, sig_name_vec, colors);
+    dataMCplotMaker(null, ht_jet1_pt_vec, bkg_names_vec, "jet1 p_{T}", "", "--outputName plots/t_jet1_pt.pdf --xAxisLabel p_{T}"+comopt, hs_jet1_pt_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_btag1_pt_vec, bkg_names_vec, "btag1 p_{T}", "", "--outputName plots/t_btag1_pt.pdf --xAxisLabel p_{T}"+comopt, hs_btag1_pt_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_ngoodjets_vec, bkg_names_vec, "ngoodjets", "", "--outputName plots/t_ngoodjets.pdf --nDivisions 9 --xAxisLabel n --noXaxisUnit"+comopt, hs_ngoodjets_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_ngoodbtags_vec, bkg_names_vec, "ngoodbtags", "", "--outputName plots/t_ngoodbtags.pdf --nDivisions 5 --xAxisLabel n --noXaxisUnit"+comopt, hs_ngoodbtags_vec, sig_name_vec, colors);
+    dataMCplotMaker(null, ht_topness_vec, bkg_names_vec, "topness", "", "--outputName plots/t_topness.pdf --xAxisLabel t --noXaxisUnit"+comopt, hs_topness_vec, sig_name_vec, colors);
   
-    colors.pop_back(); colors.pop_back(); colors.pop_back(); colors.pop_back();
-    colors.push_back(kBlack);
-    colors.push_back(kBlack);
-    colors.push_back(kBlack);
+    // colors.pop_back(); colors.pop_back(); colors.pop_back(); colors.pop_back();
+    // colors.push_back(TColor::GetColor("#f5ab35"));
+    // colors.push_back(TColor::GetColor("#F22613"));
+    // colors.push_back(TColor::GetColor("#00ff00"));
+
+    colors.clear();
+    colors.push_back(TColor::GetColor("#7c9aaa"));
+    colors.push_back(TColor::GetColor("#175a87"));
+    colors.push_back(TColor::GetColor("#267821"));
+
+    colors.push_back(TColor::GetColor("#f5ab35"));
+    colors.push_back(TColor::GetColor("#F22613"));
+    colors.push_back(TColor::GetColor("#50ebec"));
     
     dataMCplotMaker(null, hc_met_vec, bkg_cat_vec, "met", "", "--outputName plots/c_met.pdf --xAxisLabel met"+comopt, hs_met_vec, sig_name_vec, colors);
     dataMCplotMaker(null, hc_mt_vec, bkg_cat_vec, "M_{T}", "", "--outputName plots/c_mt.pdf --xAxisLabel M_T"+comopt, hs_mt_vec, sig_name_vec, colors);
@@ -389,6 +426,7 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
     dataMCplotMaker(null, hc_btag1_pt_vec, bkg_cat_vec, "btag1 p_{T}", "", "--outputName plots/c_btag1_pt.pdf --xAxisLabel p_{T}"+comopt, hs_btag1_pt_vec, sig_name_vec, colors);
     dataMCplotMaker(null, hc_ngoodjets_vec, bkg_cat_vec, "ngoodjets", "", "--outputName plots/c_ngoodjets.pdf --nDivisions 9 --xAxisLabel n --noXaxisUnit"+comopt, hs_ngoodjets_vec, sig_name_vec, colors);
     dataMCplotMaker(null, hc_ngoodbtags_vec, bkg_cat_vec, "ngoodbtags", "", "--outputName plots/c_ngoodbtags.pdf --nDivisions 5 --xAxisLabel n --noXaxisUnit"+comopt, hs_ngoodbtags_vec, sig_name_vec, colors);
+    dataMCplotMaker(null, hc_topness_vec, bkg_cat_vec, "topness", "", "--outputName plots/c_topness.pdf --xAxisLabel t --noXaxisUnit"+comopt, hs_topness_vec, sig_name_vec, colors);
   
     // return
     bmark->Stop("benchmark");
