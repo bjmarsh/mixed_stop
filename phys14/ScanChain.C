@@ -49,6 +49,7 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
     bkg_names_vec.push_back("ttZ");
     bkg_names_vec.push_back("tW");
 
+    // backgrounds categorized by bkg process (ttbar, wjets, etc)
     vector<TH1F*> ht_ngoodjets_vec;
     vector<TH1F*> ht_ngoodbtags_vec;
     vector<TH1F*> ht_met_vec;
@@ -74,18 +75,21 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
         name = string("ht_mt2w_")+(char)('0'+i);
         ht_mt2w_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("ht_lep1_pt_")+(char)('0'+i);
-        ht_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
+        ht_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("ht_jet1_pt_")+(char)('0'+i);
         ht_jet1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("ht_btag1_pt_")+(char)('0'+i);
-        ht_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
+        ht_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("ht_count_")+(char)('0'+i);
-        ht_count_vec.push_back(new TH1F(name.c_str(), name.c_str(), 1, 0, 2));
+        ht_count_vec.push_back(new TH1F(name.c_str(), name.c_str(), 4, -0.5, 3.5));
         name = string("ht_ngenlep_")+(char)('0'+i);
         ht_ngenlep_vec.push_back(new TH1F(name.c_str(), name.c_str(), 3, -0.5, 2.5));
         name = string("ht_topness_")+(char)('0'+i);
         ht_topness_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 20));
     }
+
+
+    // backgrounds categorized by # genlep (count genleps from t/W decays)
 
     vector<string> bkg_cat_vec;
     bkg_cat_vec.push_back("0 lep");
@@ -115,17 +119,19 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
         name = string("hc_mt2w_")+(char)('0'+i);
         hc_mt2w_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hc_lep1_pt_")+(char)('0'+i);
-        hc_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
+        hc_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hc_jet1_pt_")+(char)('0'+i);
         hc_jet1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hc_btag1_pt_")+(char)('0'+i);
-        hc_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
+        hc_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hc_count_")+(char)('0'+i);
-        hc_count_vec.push_back(new TH1F(name.c_str(), name.c_str(), 1, 0, 2));
+        hc_count_vec.push_back(new TH1F(name.c_str(), name.c_str(), 4, -0.5, 3.5));
         name = string("hc_topness_")+(char)('0'+i);
         hc_topness_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 20));
     }
 
+    // signal histograms
+    
     vector<string> sig_name_vec;
     sig_name_vec.push_back("425/230/222.5 x10");
     sig_name_vec.push_back("650/330/325 x10");
@@ -155,19 +161,22 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
         name = string("hs_mt2w_")+(char)('0'+i);
         hs_mt2w_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hs_lep1_pt_")+(char)('0'+i);
-        hs_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
+        hs_lep1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hs_jet1_pt_")+(char)('0'+i);
         hs_jet1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hs_btag1_pt_")+(char)('0'+i);
-        hs_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 400));
+        hs_btag1_pt_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 500));
         name = string("hs_count_")+(char)('0'+i);
-        hs_count_vec.push_back(new TH1F(name.c_str(), name.c_str(), 1, 0, 2));
+        hs_count_vec.push_back(new TH1F(name.c_str(), name.c_str(), 4, -0.5, 3.5));
         name = string("hs_decay_")+(char)('0'+i);
         hs_decay_vec.push_back(new TH1F(name.c_str(), name.c_str(), 4, -0.5, 3.5));
         name = string("hs_topness_")+(char)('0'+i);
         hs_topness_vec.push_back(new TH1F(name.c_str(), name.c_str(), 30, 0, 20));
     }
 
+    /* get signal/background counts for S/B calculations. Evens are bg, odds are sig.
+       0/1: base selections, 2/3: btag pt, 4/5: topness, 6/7: btag pt+topness  */
+    TH1F *h_sb_counts = new TH1F("h_sb_counts","h_sb_counts", 8, -0.5, 7.5);
 
     // File Loop
     while ( (currentFile = (TFile*)fileIter.Next()) ) {
@@ -195,7 +204,7 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
             // Progress
             CMS3::progress( nEventsTotal, nEventsChain );
 
-            double scale = scale1fb() * 10;
+            double scale = scale1fb() * 5;
             double isSignal = (fileType>=4);
             int bkgType = getBkgType();
 
@@ -206,9 +215,11 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
             // if(fileType==6)
             //     scale = 0.0001751;
 
+            // just to make them more visible in plots
             if(isSignal)
                 scale *= 10;
 
+            //count the number of each type of decay to make sure it looks ok
             if(isSignal)
                 hs_decay_vec[fileType-N_BKG_TYPES]->Fill(getStopDecayMode(), scale);
 
@@ -231,6 +242,7 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
             double jet1pt = ak4pfjets_pt()[0];
             double btag1pt = ak4pfjets_leadbtag_p4().Pt();
 
+            //exactly one good lepton, plus not even a hint of any other lepton
             if(ngoodleps()!=1 || nvetoleps()!=1 || !PassTrackVeto() || !PassTauVeto())
                 continue;
 
@@ -295,27 +307,50 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
             if(!isSignal){
                 ht_lep1_pt_vec[fileType]->Fill(lep1pt, scale);
                 ht_jet1_pt_vec[fileType]->Fill(jet1pt, scale);
-                ht_btag1_pt_vec[fileType]->Fill(btag1pt, scale);
-                ht_count_vec[fileType]->Fill(1,scale);
+                if(nbtags>=2)
+                    ht_btag1_pt_vec[fileType]->Fill(btag1pt, scale);
+                else
+                    ht_btag1_pt_vec[fileType]->Fill(jet1pt, scale);                    
+                ht_count_vec[fileType]->Fill(0.0,scale);
                 ht_ngenlep_vec[fileType]->Fill(bkgType,scale);
                 ht_topness_vec[fileType]->Fill(topness(),scale);
                 
                 hc_lep1_pt_vec[bkgType]->Fill(lep1pt, scale);
                 hc_jet1_pt_vec[bkgType]->Fill(jet1pt, scale);
                 hc_btag1_pt_vec[bkgType]->Fill(btag1pt, scale);
-                hc_count_vec[bkgType]->Fill(1,scale);
+                hc_count_vec[bkgType]->Fill(0.0,scale);
                 hc_topness_vec[bkgType]->Fill(topness(),scale);
+
             }else{
                 hs_lep1_pt_vec[fileType-N_BKG_TYPES]->Fill(lep1pt, scale);
                 hs_jet1_pt_vec[fileType-N_BKG_TYPES]->Fill(jet1pt, scale);
-                hs_btag1_pt_vec[fileType-N_BKG_TYPES]->Fill(btag1pt, scale);
-                hs_count_vec[fileType-N_BKG_TYPES]->Fill(1,scale);
+                if(nbtags>=2)
+                    hs_btag1_pt_vec[fileType-N_BKG_TYPES]->Fill(btag1pt, scale);
+                else
+                    hs_btag1_pt_vec[fileType-N_BKG_TYPES]->Fill(jet1pt, scale);
+                hs_count_vec[fileType-N_BKG_TYPES]->Fill(0.0,scale/10);
                 hs_topness_vec[fileType-N_BKG_TYPES]->Fill(topness(),scale);
+
             }
 
-
-            if(fileType==3)
-                cout << gents_status().size();
+            if(btag1pt>150){
+                if(!isSignal)
+                    ht_count_vec[fileType]->Fill(1,scale);
+                else
+                    hs_count_vec[fileType-N_BKG_TYPES]->Fill(1,scale/10);
+            }
+            if(topness()>9){
+                if(!isSignal)
+                    ht_count_vec[fileType]->Fill(2,scale);
+                else
+                    hs_count_vec[fileType-N_BKG_TYPES]->Fill(2,scale/10);
+            }
+            if(btag1pt>150 && topness()>9){
+                if(!isSignal)
+                    ht_count_vec[fileType]->Fill(3,scale);
+                else
+                    hs_count_vec[fileType-N_BKG_TYPES]->Fill(3,scale/10);
+            }
 
 
         }
@@ -392,14 +427,14 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
     colors.push_back(TColor::GetColor("#F22613"));
     colors.push_back(TColor::GetColor("#50ebec"));
 
-    string comopt = " --lumi 10.0 --legendTextSize 0.025 --outOfFrame";
+    string comopt = " --lumi 5.0 --legendTextSize 0.020 --outOfFrame";
     
     dataMCplotMaker(null, ht_met_vec, bkg_names_vec, "met", "", "--outputName plots/t_met.pdf --xAxisLabel met"+comopt, hs_met_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_mt_vec, bkg_names_vec, "M_{T}", "", "--outputName plots/t_mt.pdf --xAxisLabel M_T"+comopt, hs_mt_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_mt2w_vec, bkg_names_vec, "MT2W", "", "--outputName plots/t_mt2w.pdf --xAxisLabel MT2W"+comopt, hs_mt2w_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_lep1_pt_vec, bkg_names_vec, "lep1 p_{T}", "", "--outputName plots/t_lep1_pt.pdf --xAxisLabel p_{T}"+comopt, hs_lep1_pt_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_jet1_pt_vec, bkg_names_vec, "jet1 p_{T}", "", "--outputName plots/t_jet1_pt.pdf --xAxisLabel p_{T}"+comopt, hs_jet1_pt_vec, sig_name_vec, colors);
-    dataMCplotMaker(null, ht_btag1_pt_vec, bkg_names_vec, "btag1 p_{T}", "", "--outputName plots/t_btag1_pt.pdf --xAxisLabel p_{T}"+comopt, hs_btag1_pt_vec, sig_name_vec, colors);
+    dataMCplotMaker(null, ht_btag1_pt_vec, bkg_names_vec, "btag1 p_{T}", "", "--outputName plots/t_btag1_pt.pdf --xAxisLabel p_{T} "+comopt, hs_btag1_pt_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_ngoodjets_vec, bkg_names_vec, "ngoodjets", "", "--outputName plots/t_ngoodjets.pdf --nDivisions 9 --xAxisLabel n --noXaxisUnit"+comopt, hs_ngoodjets_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_ngoodbtags_vec, bkg_names_vec, "ngoodbtags", "", "--outputName plots/t_ngoodbtags.pdf --nDivisions 5 --xAxisLabel n --noXaxisUnit"+comopt, hs_ngoodbtags_vec, sig_name_vec, colors);
     dataMCplotMaker(null, ht_topness_vec, bkg_names_vec, "topness", "", "--outputName plots/t_topness.pdf --xAxisLabel t --noXaxisUnit"+comopt, hs_topness_vec, sig_name_vec, colors);
